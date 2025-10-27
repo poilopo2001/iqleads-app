@@ -53,11 +53,56 @@ Contains environment variables formatted for Next.js:
 
 ### Prerequisites
 - Node.js 18+ installed
-- Supabase CLI installed (for local development): `npm install -g supabase`
-- Stripe CLI installed (optional, for webhooks): [Stripe CLI Installation](https://stripe.com/docs/stripe-cli)
+- Supabase CLI installed: `npm install -g supabase`
+- Stripe CLI installed: [Stripe CLI Installation](https://stripe.com/docs/stripe-cli)
 - Stripe account: [Sign up at Stripe](https://dashboard.stripe.com/register)
 
-### Quick Setup (Automated) ⚡
+### Ultimate Setup with Claude Code 🤖 (Fully Automated)
+
+**The absolute easiest way!** If you have [Claude Code](https://claude.com/claude-code), this is fully automated - ONE command sets up everything including Stripe products and prices.
+
+#### 1. Clone the Repository
+
+```bash
+npx degit IncomeStreamSurfer/nanobananatest my-saas-app
+cd my-saas-app
+```
+
+#### 2. Start Claude Code
+
+```bash
+claude
+```
+
+#### 3. Run the Setup Command
+
+```
+/setup-boilerplate
+```
+
+That's it! Claude Code will:
+- ✅ Install all dependencies
+- ✅ Start Supabase local instance
+- ✅ Create and populate .env files with Supabase credentials
+- ✅ Authenticate you with Stripe (browser login)
+- ✅ **Create Stripe products** (Pro and Enterprise)
+- ✅ **Create all Stripe prices** (monthly and yearly for each tier)
+- ✅ **Capture and populate ALL Stripe IDs automatically**
+- ✅ Start Stripe webhook listener and capture webhook secret
+- ✅ Verify entire setup is complete
+
+**Result:** Fully working SaaS with Supabase auth and Stripe payments in minutes!
+
+Then just run:
+```bash
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) and start building! 🚀
+
+---
+
+### Quick Setup (Automated Script) ⚡
 
 The fastest way to get started! The setup script automatically configures everything for you.
 
@@ -257,8 +302,12 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) in your browser!
 
-### Available Scripts
+### Available Commands
 
+**Claude Code Slash Commands:**
+- `/setup-boilerplate` - **🤖 FULLY automated setup** (Supabase + Stripe products + all config)
+
+**NPM Scripts:**
 - `npm run setup` - **Automated setup script** (configures Supabase, creates env files)
 - `npm run dev` - Start Next.js development server
 - `npm run build` - Build for production
