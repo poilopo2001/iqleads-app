@@ -64,7 +64,7 @@ Contains environment variables formatted for Next.js:
 #### 1. Clone the Repository
 
 ```bash
-npx degit IncomeStreamSurfer/nanobananatest my-saas-app
+npx degit IncomeStreamSurfer/claude-code-saas-starter my-saas-app
 cd my-saas-app
 ```
 
@@ -109,7 +109,7 @@ The fastest way to get started! The setup script automatically configures everyt
 #### 1. Clone and Install
 
 ```bash
-npx degit IncomeStreamSurfer/nanobananatest my-saas-app
+npx degit IncomeStreamSurfer/claude-code-saas-starter my-saas-app
 cd my-saas-app
 npm install
 ```
@@ -159,7 +159,7 @@ Prefer to set things up manually? Follow this detailed guide.
 #### 1. Clone and Install
 
 ```bash
-npx degit IncomeStreamSurfer/nanobananatest my-saas-app
+npx degit IncomeStreamSurfer/claude-code-saas-starter my-saas-app
 cd my-saas-app
 npm install
 ```
