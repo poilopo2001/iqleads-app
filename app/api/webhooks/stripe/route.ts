@@ -8,6 +8,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { headers } from 'next/headers';
 import { stripe } from '@/lib/stripe/server';
+import { STRIPE_CONFIG } from '@/lib/stripe/config';
 import { createClient } from '@supabase/supabase-js';
 import { revalidatePath } from 'next/cache';
 import Stripe from 'stripe';
@@ -27,11 +28,11 @@ const supabaseAdmin = createClient(
 // Helper function to map Stripe price ID to membership tier
 function getTierFromPriceId(priceId: string): 'free' | 'pro' | 'enterprise' {
   // Price IDs for Pro tier (monthly and yearly)
-  if (priceId === 'price_1SMCEeQ1lUJh1eUJAUJZrAen' || priceId === 'price_1SMCEoQ1lUJh1eUJSiHkukna') {
+  if (priceId === STRIPE_CONFIG.prices.pro.monthly || priceId === STRIPE_CONFIG.prices.pro.yearly) {
     return 'pro';
   }
   // Price IDs for Enterprise tier (monthly and yearly)
-  if (priceId === 'price_1SMCEyQ1lUJh1eUJnEln6Hh8' || priceId === 'price_1SMCF1Q1lUJh1eUJJfUWrm8U') {
+  if (priceId === STRIPE_CONFIG.prices.enterprise.monthly || priceId === STRIPE_CONFIG.prices.enterprise.yearly) {
     return 'enterprise';
   }
   return 'free';

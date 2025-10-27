@@ -12,6 +12,7 @@ export default function PricingPage() {
   const [billingPeriod, setBillingPeriod] = useState<BillingPeriod>('monthly');
   const [loading, setLoading] = useState<string | null>(null);
   const router = useRouter();
+  const appName = process.env.NEXT_PUBLIC_APP_NAME || "SaaS Boilerplate";
 
   const handleSubscribe = async (tier: 'pro' | 'enterprise') => {
     setLoading(tier);
@@ -77,7 +78,7 @@ export default function PricingPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16 items-center">
             <Link href="/" className="text-xl font-bold text-gray-900 dark:text-white">
-              Stream Project
+              {appName}
             </Link>
             <div className="flex items-center space-x-4">
               <Link

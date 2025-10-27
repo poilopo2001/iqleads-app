@@ -8,6 +8,8 @@ export default async function Home() {
     data: { user },
   } = await supabase.auth.getUser();
 
+  const appName = process.env.NEXT_PUBLIC_APP_NAME || "SaaS Boilerplate";
+
   return (
     <div className="min-h-screen flex flex-col">
       {/* Navigation */}
@@ -15,7 +17,7 @@ export default async function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16 items-center">
             <Link href="/" className="text-xl font-bold text-gray-900 dark:text-white">
-              Stream Project
+              {appName}
             </Link>
             <div className="flex items-center space-x-4">
               <Link
@@ -49,7 +51,7 @@ export default async function Home() {
         <div className="max-w-4xl w-full space-y-8">
           <div className="text-center space-y-4">
             <h1 className="text-4xl font-bold tracking-tight">
-              Welcome to Stream Project
+              Welcome to {appName}
             </h1>
             <p className="text-lg text-gray-600 dark:text-gray-400">
               A Next.js application with Supabase authentication and Stripe payments

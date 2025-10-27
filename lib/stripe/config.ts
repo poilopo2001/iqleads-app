@@ -2,22 +2,50 @@
  * Stripe Product and Price Configuration
  *
  * This file contains all Stripe product and price IDs for the subscription tiers.
- * These IDs are generated from the Stripe dashboard or CLI and should be kept in sync.
+ * These IDs are loaded from environment variables to make the codebase portable.
+ *
+ * Required Environment Variables:
+ * - STRIPE_PRODUCT_PRO: Product ID for Pro tier
+ * - STRIPE_PRODUCT_ENTERPRISE: Product ID for Enterprise tier
+ * - STRIPE_PRICE_PRO_MONTHLY: Price ID for Pro monthly billing
+ * - STRIPE_PRICE_PRO_YEARLY: Price ID for Pro yearly billing
+ * - STRIPE_PRICE_ENTERPRISE_MONTHLY: Price ID for Enterprise monthly billing
+ * - STRIPE_PRICE_ENTERPRISE_YEARLY: Price ID for Enterprise yearly billing
  */
+
+// Validate required environment variables
+if (!process.env.STRIPE_PRODUCT_PRO) {
+  throw new Error('Missing required environment variable: STRIPE_PRODUCT_PRO');
+}
+if (!process.env.STRIPE_PRODUCT_ENTERPRISE) {
+  throw new Error('Missing required environment variable: STRIPE_PRODUCT_ENTERPRISE');
+}
+if (!process.env.STRIPE_PRICE_PRO_MONTHLY) {
+  throw new Error('Missing required environment variable: STRIPE_PRICE_PRO_MONTHLY');
+}
+if (!process.env.STRIPE_PRICE_PRO_YEARLY) {
+  throw new Error('Missing required environment variable: STRIPE_PRICE_PRO_YEARLY');
+}
+if (!process.env.STRIPE_PRICE_ENTERPRISE_MONTHLY) {
+  throw new Error('Missing required environment variable: STRIPE_PRICE_ENTERPRISE_MONTHLY');
+}
+if (!process.env.STRIPE_PRICE_ENTERPRISE_YEARLY) {
+  throw new Error('Missing required environment variable: STRIPE_PRICE_ENTERPRISE_YEARLY');
+}
 
 export const STRIPE_CONFIG = {
   products: {
-    pro: 'prod_TInpYdKeQhvTPV',
-    enterprise: 'prod_TInpfSvMzJ8zv6',
+    pro: process.env.STRIPE_PRODUCT_PRO,
+    enterprise: process.env.STRIPE_PRODUCT_ENTERPRISE,
   },
   prices: {
     pro: {
-      monthly: 'price_1SMCEeQ1lUJh1eUJAUJZrAen',
-      yearly: 'price_1SMCEoQ1lUJh1eUJSiHkukna',
+      monthly: process.env.STRIPE_PRICE_PRO_MONTHLY,
+      yearly: process.env.STRIPE_PRICE_PRO_YEARLY,
     },
     enterprise: {
-      monthly: 'price_1SMCEyQ1lUJh1eUJnEln6Hh8',
-      yearly: 'price_1SMCF1Q1lUJh1eUJJfUWrm8U',
+      monthly: process.env.STRIPE_PRICE_ENTERPRISE_MONTHLY,
+      yearly: process.env.STRIPE_PRICE_ENTERPRISE_YEARLY,
     },
   },
 } as const;

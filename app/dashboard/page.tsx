@@ -17,6 +17,8 @@ export default async function DashboardPage() {
     data: { user },
   } = await supabase.auth.getUser();
 
+  const appName = process.env.NEXT_PUBLIC_APP_NAME || "SaaS Boilerplate";
+
   // This page is protected by middleware, but adding extra check for safety
   if (!user) {
     redirect('/auth/login');
@@ -64,7 +66,7 @@ export default async function DashboardPage() {
           <div className="flex justify-between h-16 items-center">
             <div className="flex items-center">
               <Link href="/" className="text-xl font-bold text-gray-900 dark:text-white">
-                Stream Project
+                {appName}
               </Link>
             </div>
             <div className="flex items-center space-x-4">
