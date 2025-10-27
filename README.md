@@ -54,16 +54,68 @@ Contains environment variables formatted for Next.js:
 ### Prerequisites
 - Node.js 18+ installed
 - Supabase CLI installed (for local development): `npm install -g supabase`
-- Stripe CLI installed (for webhook testing): [Stripe CLI Installation](https://stripe.com/docs/stripe-cli)
+- Stripe CLI installed (optional, for webhooks): [Stripe CLI Installation](https://stripe.com/docs/stripe-cli)
 - Stripe account: [Sign up at Stripe](https://dashboard.stripe.com/register)
 
-### Quick Start Guide
+### Quick Setup (Automated) ⚡
+
+The fastest way to get started! The setup script automatically configures everything for you.
 
 #### 1. Clone and Install
 
 ```bash
-git clone <your-repo-url>
-cd <your-project-name>
+npx degit IncomeStreamSurfer/nanobananatest my-saas-app
+cd my-saas-app
+npm install
+```
+
+#### 2. Run Automated Setup
+
+```bash
+npm run setup
+```
+
+This interactive script will:
+- ✅ Start Supabase local instance
+- ✅ Fetch and populate all Supabase credentials
+- ✅ Create `.env` and `.env.local` files
+- ✅ Optionally set up Stripe webhook listener
+
+#### 3. Add Your Stripe Credentials
+
+Open `.env` and `.env.local` and add:
+
+1. **Stripe API Keys** from [Stripe Dashboard](https://dashboard.stripe.com/test/apikeys):
+   ```bash
+   STRIPE_PUBLISHABLE_KEY=pk_test_your_key
+   STRIPE_SECRET_KEY=sk_test_your_key
+   ```
+
+2. **Create Products & Prices** in [Stripe Products](https://dashboard.stripe.com/products):
+   - Create "Pro" product with monthly & yearly prices
+   - Create "Enterprise" product with monthly & yearly prices
+   - Copy the product IDs (prod_xxx) and price IDs (price_xxx)
+   - Add them to your `.env` files
+
+#### 4. Start Developing
+
+```bash
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) - you're ready to go! 🚀
+
+---
+
+### Manual Setup (Alternative)
+
+Prefer to set things up manually? Follow this detailed guide.
+
+#### 1. Clone and Install
+
+```bash
+npx degit IncomeStreamSurfer/nanobananatest my-saas-app
+cd my-saas-app
 npm install
 ```
 
@@ -207,6 +259,7 @@ Open [http://localhost:3000](http://localhost:3000) in your browser!
 
 ### Available Scripts
 
+- `npm run setup` - **Automated setup script** (configures Supabase, creates env files)
 - `npm run dev` - Start Next.js development server
 - `npm run build` - Build for production
 - `npm run start` - Start production server
