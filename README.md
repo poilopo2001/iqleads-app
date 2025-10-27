@@ -1,6 +1,29 @@
-# Next.js SaaS Boilerplate
+# Next.js SaaS Boilerplate with Claude Code
 
-A production-ready SaaS boilerplate with Next.js, Supabase authentication, and Stripe subscription payments. Fully configurable via environment variables for easy customization.
+A production-ready SaaS boilerplate with Next.js, Supabase authentication, and Stripe subscription payments. **Featuring fully automated setup via Claude Code** - go from zero to running SaaS in minutes!
+
+## 🤖 Built for Claude Code
+
+This boilerplate is designed to work seamlessly with [Claude Code](https://claude.com/claude-code) - Anthropic's AI coding assistant. With a single slash command (`/setup-boilerplate`), Claude Code will:
+
+- ✅ **Automatically start** your local Supabase instance
+- ✅ **Create and populate** all environment files with credentials
+- ✅ **Authenticate you** with Stripe via browser login
+- ✅ **Create Stripe products** programmatically (Pro & Enterprise tiers)
+- ✅ **Create all Stripe prices** (monthly & yearly billing)
+- ✅ **Capture all IDs** and update your .env files automatically
+- ✅ **Start webhook listener** and save the webhook secret
+
+**No manual configuration needed!** Just clone, run Claude Code, type `/setup-boilerplate`, and you're ready to build.
+
+## 🚀 Get Help & Support
+
+- **Join our Community:** [ISS AI Automation School on Skool](https://www.skool.com/iss-ai-automation-school-6342/about)
+- **Book a Call:** [Schedule 1-on-1 time with me](https://calendar.google.com/calendar/u/0/appointments/AcZssZ2oL_DgLYpW29DF7Nv7tE8v5LI5lTvh4CLDVx4=)
+
+Need help getting started? Want to learn how to build SaaS apps with AI? Join the community or book a call!
+
+---
 
 ## Tech Stack
 
@@ -57,48 +80,63 @@ Contains environment variables formatted for Next.js:
 - Stripe CLI installed: [Stripe CLI Installation](https://stripe.com/docs/stripe-cli)
 - Stripe account: [Sign up at Stripe](https://dashboard.stripe.com/register)
 
-### Ultimate Setup with Claude Code 🤖 (Fully Automated)
+### ⚡ Ultimate Setup with Claude Code (Recommended)
 
-**The absolute easiest way!** If you have [Claude Code](https://claude.com/claude-code), this is fully automated - ONE command sets up everything including Stripe products and prices.
+**The absolute easiest way!** This boilerplate includes a custom Claude Code slash command that automates **100% of the setup**.
 
-#### 1. Clone the Repository
+> **What is Claude Code?** [Claude Code](https://claude.com/claude-code) is Anthropic's AI coding assistant that can read, write, and execute code in your terminal. It's like having an expert developer pair programming with you. Get it at [claude.com/claude-code](https://claude.com/claude-code)
 
+#### Setup in 3 Steps:
+
+**1. Clone the Repository**
 ```bash
 npx degit IncomeStreamSurfer/claude-code-saas-starter my-saas-app
 cd my-saas-app
 ```
 
-#### 2. Start Claude Code
-
+**2. Start Claude Code**
 ```bash
 claude
 ```
 
-#### 3. Run the Setup Command
-
+**3. Run ONE Command**
 ```
 /setup-boilerplate
 ```
 
-That's it! Claude Code will:
-- ✅ Install all dependencies
-- ✅ Start Supabase local instance
-- ✅ Create and populate .env files with Supabase credentials
-- ✅ Authenticate you with Stripe (browser login)
-- ✅ **Create Stripe products** (Pro and Enterprise)
-- ✅ **Create all Stripe prices** (monthly and yearly for each tier)
-- ✅ **Capture and populate ALL Stripe IDs automatically**
-- ✅ Start Stripe webhook listener and capture webhook secret
-- ✅ Verify entire setup is complete
+**That's it!** 🎉 Claude Code will automatically:
 
-**Result:** Fully working SaaS with Supabase auth and Stripe payments in minutes!
+1. ✅ Install all npm dependencies
+2. ✅ Start Supabase local instance (database + auth)
+3. ✅ Create `.env` and `.env.local` files
+4. ✅ Populate all Supabase credentials automatically
+5. ✅ Authenticate you with Stripe (opens browser)
+6. ✅ **Create Pro product in Stripe with monthly & yearly prices**
+7. ✅ **Create Enterprise product in Stripe with monthly & yearly prices**
+8. ✅ **Capture all product IDs and price IDs**
+9. ✅ **Update .env files with ALL Stripe configuration**
+10. ✅ Start Stripe webhook listener
+11. ✅ Capture and save webhook secret (WHSEC)
+12. ✅ Verify entire setup is complete
+
+**Total time: ~2 minutes** ⏱️
 
 Then just run:
 ```bash
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) and start building! 🚀
+Open [http://localhost:3000](http://localhost:3000) - **fully working SaaS ready to customize!** 🚀
+
+**What you get:**
+- Magic link authentication working
+- Supabase database connected
+- Stripe checkout integration ready
+- Webhooks configured
+- Pro & Enterprise subscription tiers created
+- All environment variables set
+
+**No manual configuration. No copying IDs. No errors.** Just working code.
 
 ---
 
