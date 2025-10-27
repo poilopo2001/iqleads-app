@@ -75,10 +75,17 @@ Contains environment variables formatted for Next.js:
 ## Getting Started
 
 ### Prerequisites
+
+**Minimum Requirements:**
 - Node.js 18+ installed
-- Supabase CLI installed: `npm install -g supabase`
-- Stripe CLI installed: [Stripe CLI Installation](https://stripe.com/docs/stripe-cli)
+- Docker Desktop installed and running ([Download Docker](https://www.docker.com/products/docker-desktop/))
 - Stripe account: [Sign up at Stripe](https://dashboard.stripe.com/register)
+
+**Optional (auto-installed by Claude Code):**
+- Supabase CLI
+- Stripe CLI
+
+> **Note:** The `/setup-boilerplate` command will automatically check for and offer to install Supabase CLI and Stripe CLI if they're missing. You can also install them manually beforehand if you prefer.
 
 ### ⚡ Ultimate Setup with Claude Code (Recommended)
 

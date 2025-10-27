@@ -7,14 +7,78 @@ allowed-tools: Bash(*), Read, Write, Edit
 
 You are setting up a complete SaaS boilerplate with Next.js, Supabase, and Stripe. This command will automate EVERYTHING - from local Supabase setup to creating Stripe products and prices.
 
-## Prerequisites Check
+## Prerequisites Check and Auto-Install
 
-First, verify all required tools are installed:
+**Important:** This command will check for required tools and attempt to install them automatically.
 
-1. Check Node.js version (need 18+)
-2. Check if Supabase CLI is installed
-3. Check if Stripe CLI is installed
-4. If any are missing, provide installation instructions and STOP
+### Step 0: Check and Install Prerequisites
+
+**1. Check Node.js Version:**
+- Run: `node --version`
+- Must be 18 or higher
+- If not installed or too old, provide instructions for the user's OS and STOP
+
+**2. Check Docker (required for Supabase):**
+- Run: `docker --version`
+- If not installed, inform user:
+  ```
+  Docker is required for Supabase local development.
+
+  Install Docker Desktop:
+  - Mac: https://docs.docker.com/desktop/install/mac-install/
+  - Windows: https://docs.docker.com/desktop/install/windows-install/
+  - Linux: https://docs.docker.com/desktop/install/linux-install/
+
+  After installing Docker, please restart the setup by running /setup-boilerplate again.
+  ```
+  Then STOP.
+
+**3. Check and Install Supabase CLI:**
+- Check if installed: `supabase --version`
+- If NOT installed, ask user: "Supabase CLI is not installed. Would you like me to install it for you? (y/n)"
+- If user says yes:
+  - Detect OS (run `uname` or check `process.platform`)
+  - **For macOS:** Run `brew install supabase/tap/supabase`
+  - **For Linux/WSL:** Run `brew install supabase/tap/supabase` (if Homebrew available) or provide manual instructions
+  - **For Windows:** Provide Scoop instructions:
+    ```
+    scoop bucket add supabase https://github.com/supabase/scoop-bucket.git
+    scoop install supabase
+    ```
+  - If installation fails, provide link: https://supabase.com/docs/guides/cli/getting-started
+- If user says no, provide installation link and STOP
+
+**4. Check and Install Stripe CLI:**
+- Check if installed: `stripe --version`
+- If NOT installed, ask user: "Stripe CLI is not installed. Would you like me to install it for you? (y/n)"
+- If user says yes:
+  - Detect OS
+  - **For macOS:** Run `brew install stripe/stripe-cli/stripe`
+  - **For Linux:** Provide instructions:
+    ```bash
+    # Download and install
+    curl -s https://packages.stripe.dev/api/security/keypair/stripe-cli-gpg/public | gpg --dearmor | sudo tee /usr/share/keyrings/stripe.gpg
+    echo "deb [signed-by=/usr/share/keyrings/stripe.gpg] https://packages.stripe.dev/stripe-cli-debian-local stable main" | sudo tee -a /etc/apt/sources.list.d/stripe.list
+    sudo apt update
+    sudo apt install stripe
+    ```
+  - **For Windows:** Provide Scoop instructions:
+    ```
+    scoop bucket add stripe https://github.com/stripe/scoop-stripe-cli.git
+    scoop install stripe
+    ```
+  - If installation fails, provide link: https://stripe.com/docs/stripe-cli#install
+- If user says no, provide installation link and STOP
+
+**5. Verify Docker is Running:**
+- Run: `docker ps`
+- If it fails, inform user:
+  ```
+  Docker is installed but not running. Please start Docker Desktop and then run /setup-boilerplate again.
+  ```
+  Then STOP.
+
+If all prerequisites are met, proceed to the setup steps.
 
 ## Setup Steps
 
