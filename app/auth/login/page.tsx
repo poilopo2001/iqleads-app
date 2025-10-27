@@ -2,12 +2,15 @@
 
 import { signInWithMagicLink } from '@/app/actions/auth';
 import { useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+  const searchParams = useSearchParams();
+  const redirect = searchParams.get('redirect') || '/dashboard';
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -15,6 +18,7 @@ export default function LoginPage() {
     setMessage(null);
 
     const formData = new FormData(e.currentTarget);
+    formData.append('redirect', redirect);
     const result = await signInWithMagicLink(formData);
 
     setLoading(false);

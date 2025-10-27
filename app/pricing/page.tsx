@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState, useEffect } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { PRICING, formatPrice, calculateYearlySavings } from '@/lib/stripe/config';
 
@@ -12,27 +12,30 @@ export default function PricingPage() {
   const [billingPeriod, setBillingPeriod] = useState<BillingPeriod>('monthly');
   const [loading, setLoading] = useState<string | null>(null);
   const router = useRouter();
+  const searchParams = useSearchParams();
   const appName = process.env.NEXT_PUBLIC_APP_NAME || "SaaS Boilerplate";
 
-  const handleSubscribe = async (tier: 'pro' | 'enterprise') => {
+  const handleSubscribe = async (tier: 'pro' | 'enterprise', skipConfirm = false) => {
     setLoading(tier);
 
-    // Confirm the subscription details with the user
-    const tierName = tier === 'pro' ? 'Pro' : 'Enterprise';
-    const periodText = billingPeriod === 'monthly' ? 'Monthly' : 'Yearly';
-    const price = PRICING[tier].price[billingPeriod];
-    const priceText = formatPrice(price);
-    const perText = billingPeriod === 'monthly' ? 'month' : 'year';
+    // Confirm the subscription details with the user (unless skipping for auto-checkout)
+    if (!skipConfirm) {
+      const tierName = tier === 'pro' ? 'Pro' : 'Enterprise';
+      const periodText = billingPeriod === 'monthly' ? 'Monthly' : 'Yearly';
+      const price = PRICING[tier].price[billingPeriod];
+      const priceText = formatPrice(price);
+      const perText = billingPeriod === 'monthly' ? 'month' : 'year';
 
-    const confirmed = confirm(
-      `You are about to subscribe to the ${tierName} plan (${periodText} billing).\n\n` +
-      `Price: ${priceText}/${perText}\n\n` +
-      `Click OK to proceed to checkout.`
-    );
+      const confirmed = confirm(
+        `You are about to subscribe to the ${tierName} plan (${periodText} billing).\n\n` +
+        `Price: ${priceText}/${perText}\n\n` +
+        `Click OK to proceed to checkout.`
+      );
 
-    if (!confirmed) {
-      setLoading(null);
-      return;
+      if (!confirmed) {
+        setLoading(null);
+        return;
+      }
     }
 
     try {
@@ -50,6 +53,12 @@ export default function PricingPage() {
       const data = await response.json();
 
       if (!response.ok) {
+        // If unauthorized (not logged in), redirect to login with return URL
+        if (response.status === 401) {
+          const returnUrl = `/pricing?tier=${tier}&period=${billingPeriod}&checkout=true`;
+          router.push(`/auth/login?redirect=${encodeURIComponent(returnUrl)}`);
+          return;
+        }
         throw new Error(data.error || 'Failed to create checkout session');
       }
 
@@ -70,6 +79,23 @@ export default function PricingPage() {
       setLoading(null);
     }
   };
+
+  // Auto-trigger checkout if returning from login
+  useEffect(() => {
+    const shouldCheckout = searchParams.get('checkout');
+    const tier = searchParams.get('tier') as 'pro' | 'enterprise' | null;
+    const period = searchParams.get('period') as 'monthly' | 'yearly' | null;
+
+    if (shouldCheckout === 'true' && tier && period) {
+      // Set the billing period to match what they selected
+      setBillingPeriod(period);
+      // Auto-trigger the checkout (skip confirmation since they already confirmed)
+      handleSubscribe(tier, true);
+      // Clean up URL params
+      router.replace('/pricing', { scroll: false });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams]);
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">

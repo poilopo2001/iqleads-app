@@ -10,6 +10,7 @@ import { headers } from 'next/headers';
  */
 export async function signInWithMagicLink(formData: FormData) {
   const email = formData.get('email') as string;
+  const redirect = formData.get('redirect') as string;
 
   if (!email) {
     return { error: 'Email is required' };
@@ -19,10 +20,16 @@ export async function signInWithMagicLink(formData: FormData) {
   const headersList = await headers();
   const origin = headersList.get('origin') || 'http://localhost:3000';
 
+  // Build callback URL with redirect parameter if provided
+  let callbackUrl = `${origin}/auth/callback`;
+  if (redirect) {
+    callbackUrl += `?next=${encodeURIComponent(redirect)}`;
+  }
+
   const { error } = await supabase.auth.signInWithOtp({
     email,
     options: {
-      emailRedirectTo: `${origin}/auth/callback`,
+      emailRedirectTo: callbackUrl,
     },
   });
 
