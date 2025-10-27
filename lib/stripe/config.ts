@@ -13,24 +13,25 @@
  * - STRIPE_PRICE_ENTERPRISE_YEARLY: Price ID for Enterprise yearly billing
  */
 
-// Validate required environment variables
-if (!process.env.STRIPE_PRODUCT_PRO) {
-  throw new Error('Missing required environment variable: STRIPE_PRODUCT_PRO');
-}
-if (!process.env.STRIPE_PRODUCT_ENTERPRISE) {
-  throw new Error('Missing required environment variable: STRIPE_PRODUCT_ENTERPRISE');
-}
-if (!process.env.STRIPE_PRICE_PRO_MONTHLY) {
-  throw new Error('Missing required environment variable: STRIPE_PRICE_PRO_MONTHLY');
-}
-if (!process.env.STRIPE_PRICE_PRO_YEARLY) {
-  throw new Error('Missing required environment variable: STRIPE_PRICE_PRO_YEARLY');
-}
-if (!process.env.STRIPE_PRICE_ENTERPRISE_MONTHLY) {
-  throw new Error('Missing required environment variable: STRIPE_PRICE_ENTERPRISE_MONTHLY');
-}
-if (!process.env.STRIPE_PRICE_ENTERPRISE_YEARLY) {
-  throw new Error('Missing required environment variable: STRIPE_PRICE_ENTERPRISE_YEARLY');
+// Helper function to validate environment variables at runtime
+function validateStripeEnv() {
+  const required = [
+    'STRIPE_PRODUCT_PRO',
+    'STRIPE_PRODUCT_ENTERPRISE',
+    'STRIPE_PRICE_PRO_MONTHLY',
+    'STRIPE_PRICE_PRO_YEARLY',
+    'STRIPE_PRICE_ENTERPRISE_MONTHLY',
+    'STRIPE_PRICE_ENTERPRISE_YEARLY',
+  ];
+
+  const missing = required.filter(key => !process.env[key]);
+
+  if (missing.length > 0) {
+    console.warn(
+      `⚠️  Missing Stripe environment variables: ${missing.join(', ')}\n` +
+      `   Make sure to set these in your .env file before using Stripe features.`
+    );
+  }
 }
 
 export const STRIPE_CONFIG = {
@@ -108,6 +109,10 @@ export const PRICING = {
  * Helper function to get price ID from tier and billing period
  */
 export function getPriceId(tier: 'pro' | 'enterprise', period: 'monthly' | 'yearly'): string {
+  if (typeof window === 'undefined') {
+    // Only validate on server-side
+    validateStripeEnv();
+  }
   return STRIPE_CONFIG.prices[tier][period];
 }
 
@@ -115,6 +120,10 @@ export function getPriceId(tier: 'pro' | 'enterprise', period: 'monthly' | 'year
  * Helper function to get product ID from tier
  */
 export function getProductId(tier: 'pro' | 'enterprise'): string {
+  if (typeof window === 'undefined') {
+    // Only validate on server-side
+    validateStripeEnv();
+  }
   return STRIPE_CONFIG.products[tier];
 }
 
