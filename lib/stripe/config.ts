@@ -113,7 +113,11 @@ export function getPriceId(tier: 'pro' | 'enterprise', period: 'monthly' | 'year
     // Only validate on server-side
     validateStripeEnv();
   }
-  return STRIPE_CONFIG.prices[tier][period];
+  const priceId = STRIPE_CONFIG.prices[tier][period];
+  if (!priceId) {
+    throw new Error(`Missing Stripe price ID for ${tier} ${period}`);
+  }
+  return priceId;
 }
 
 /**
@@ -124,7 +128,11 @@ export function getProductId(tier: 'pro' | 'enterprise'): string {
     // Only validate on server-side
     validateStripeEnv();
   }
-  return STRIPE_CONFIG.products[tier];
+  const productId = STRIPE_CONFIG.products[tier];
+  if (!productId) {
+    throw new Error(`Missing Stripe product ID for ${tier}`);
+  }
+  return productId;
 }
 
 /**

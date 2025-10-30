@@ -19,7 +19,7 @@ interface Lead {
   phone: string | null;
   company: string | null;
   status: string;
-  temperature: string;
+  temperature: string | null;
   aiNotes?: string | null;
 }
 

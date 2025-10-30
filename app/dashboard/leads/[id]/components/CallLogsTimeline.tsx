@@ -9,20 +9,20 @@ interface CallLog {
   id: string;
   direction: string;
   status: string;
-  duration?: number;
-  outcome?: string;
-  notes?: string;
-  sentimentScore?: number;
-  qualificationScore?: number;
-  keyPoints?: string[];
-  createdAt: string;
+  duration: number | null | undefined;
+  outcome?: string | null;
+  notes?: string | null;
+  sentimentScore?: number | null;
+  qualificationScore?: number | null;
+  keyPoints?: string[] | null;
+  createdAt: Date | string;
 }
 
 interface CallLogsTimelineProps {
   callLogs: CallLog[];
 }
 
-function formatDuration(seconds?: number) {
+function formatDuration(seconds: number | null | undefined) {
   if (!seconds) return 'N/A';
   const minutes = Math.floor(seconds / 60);
   const remainingSeconds = seconds % 60;

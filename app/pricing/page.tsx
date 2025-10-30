@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { PRICING, formatPrice, calculateYearlySavings } from '@/lib/stripe/config';
@@ -8,7 +8,7 @@ import { PRICING, formatPrice, calculateYearlySavings } from '@/lib/stripe/confi
 type BillingPeriod = 'monthly' | 'yearly';
 type Tier = 'free' | 'pro' | 'enterprise';
 
-export default function PricingPage() {
+function PricingContent() {
   const [billingPeriod, setBillingPeriod] = useState<BillingPeriod>('monthly');
   const [loading, setLoading] = useState<string | null>(null);
   const router = useRouter();
@@ -334,5 +334,13 @@ export default function PricingPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function PricingPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <PricingContent />
+    </Suspense>
   );
 }
