@@ -97,12 +97,13 @@ function getStatusBadgeColor(status: string) {
   return colors[status as keyof typeof colors] || colors.new;
 }
 
-function getTemperatureBadgeColor(temperature: string) {
+function getTemperatureBadgeColor(temperature: string | null) {
   const colors = {
     cold: 'bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-400',
     warm: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400',
     hot: 'bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-400',
   };
+  if (!temperature) return colors.cold;
   return colors[temperature as keyof typeof colors] || colors.cold;
 }
 
