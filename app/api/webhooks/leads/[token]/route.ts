@@ -301,7 +301,7 @@ export async function POST(request: NextRequest, { params }: WebhookParams) {
     await db
       .update(leadSources)
       .set({
-        totalLeadsReceived: source.totalLeadsReceived + 1,
+        totalLeadsReceived: (source.totalLeadsReceived || 0) + 1,
         lastLeadReceivedAt: new Date(),
         updatedAt: new Date(),
       })
