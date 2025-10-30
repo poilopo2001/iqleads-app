@@ -15,9 +15,10 @@ import { eq, and } from 'drizzle-orm';
  */
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const organizationId = await getCurrentUserOrganizationId();
 
     if (!organizationId) {
@@ -31,7 +32,7 @@ export async function GET(
       .leftJoin(leads, eq(callLogs.leadId, leads.id))
       .where(
         and(
-          eq(callLogs.id, params.id),
+          eq(callLogs.id, id),
           eq(callLogs.organizationId, organizationId)
         )
       )
@@ -65,9 +66,10 @@ export async function GET(
  */
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const organizationId = await getCurrentUserOrganizationId();
 
     if (!organizationId) {
@@ -99,7 +101,7 @@ export async function PATCH(
       })
       .where(
         and(
-          eq(callLogs.id, params.id),
+          eq(callLogs.id, id),
           eq(callLogs.organizationId, organizationId)
         )
       )
@@ -131,9 +133,10 @@ export async function PATCH(
  */
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const organizationId = await getCurrentUserOrganizationId();
 
     if (!organizationId) {
@@ -145,7 +148,7 @@ export async function DELETE(
       .delete(callLogs)
       .where(
         and(
-          eq(callLogs.id, params.id),
+          eq(callLogs.id, id),
           eq(callLogs.organizationId, organizationId)
         )
       )
