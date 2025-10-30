@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { Toaster } from 'sonner';
 
 const appName = process.env.NEXT_PUBLIC_APP_NAME || "SaaS Boilerplate";
 
@@ -14,9 +15,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className="antialiased">
         {children}
+        <Toaster position="top-right" richColors />
       </body>
     </html>
   );

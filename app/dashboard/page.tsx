@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { PRICING, formatPrice } from '@/lib/stripe/config';
 import { ManageSubscriptionButton } from './components/ManageSubscriptionButton';
 import { SubscriptionNotifications } from './components/SubscriptionNotifications';
+import { CallIQStats, StatsLoadingSkeleton } from './components/CallIQStats';
 import { Suspense } from 'react';
 
 // Force dynamic rendering to always fetch fresh data
@@ -64,18 +65,32 @@ export default async function DashboardPage() {
       <nav className="bg-white dark:bg-gray-800 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16 items-center">
-            <div className="flex items-center">
-              <Link href="/" className="text-xl font-bold text-gray-900 dark:text-white">
+            <div className="flex items-center space-x-8">
+              <Link href="/dashboard" className="text-xl font-bold text-gray-900 dark:text-white">
                 {appName}
               </Link>
+              <div className="hidden md:flex space-x-4">
+                <Link
+                  href="/dashboard"
+                  className="text-blue-600 dark:text-blue-400 font-medium"
+                >
+                  Dashboard
+                </Link>
+                <Link
+                  href="/dashboard/leads"
+                  className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
+                >
+                  Leads
+                </Link>
+                <Link
+                  href="/dashboard/sources"
+                  className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
+                >
+                  Sources
+                </Link>
+              </div>
             </div>
             <div className="flex items-center space-x-4">
-              <Link
-                href="/"
-                className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
-              >
-                Home
-              </Link>
               <Link
                 href="/pricing"
                 className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
@@ -255,40 +270,22 @@ export default async function DashboardPage() {
               </div>
             </div>
 
-            {/* Quick Stats */}
+            {/* CallIQ Stats */}
             <div className="bg-white dark:bg-gray-800 shadow rounded-lg p-6 lg:col-span-2">
-              <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                Quick Stats
-              </h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-                  <p className="text-sm font-medium text-blue-600 dark:text-blue-400">
-                    Account Status
-                  </p>
-                  <p className="mt-2 text-2xl font-semibold text-blue-900 dark:text-blue-100">
-                    Active
-                  </p>
-                </div>
-                <div className="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg">
-                  <p className="text-sm font-medium text-green-600 dark:text-green-400">
-                    Email Verified
-                  </p>
-                  <p className="mt-2 text-2xl font-semibold text-green-900 dark:text-green-100">
-                    {user.email_confirmed_at ? 'Yes' : 'No'}
-                  </p>
-                </div>
-                <div className="p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
-                  <p className="text-sm font-medium text-purple-600 dark:text-purple-400">
-                    Member Since
-                  </p>
-                  <p className="mt-2 text-2xl font-semibold text-purple-900 dark:text-purple-100">
-                    {new Date(user.created_at).toLocaleDateString('en-US', {
-                      month: 'short',
-                      year: 'numeric'
-                    })}
-                  </p>
-                </div>
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
+                  CallIQ Overview
+                </h2>
+                <Link
+                  href="/dashboard/leads"
+                  className="text-sm text-blue-600 dark:text-blue-400 hover:underline"
+                >
+                  View all leads →
+                </Link>
               </div>
+              <Suspense fallback={<StatsLoadingSkeleton />}>
+                <CallIQStats />
+              </Suspense>
             </div>
           </div>
         </div>
